@@ -11,7 +11,6 @@ class Expenses extends StatefulWidget {
 }
 
 class _Expenses extends State<Expenses> {
-
   final List<Expense> _myExpenses = [
     Expense(
       title: 'Valentine Dinner',
@@ -21,21 +20,21 @@ class _Expenses extends State<Expenses> {
     ),
   ];
 
-  void _openAddExpenseItemOverlay(){
+  void _openAddExpenseItemOverlay() {
     showModalBottomSheet(
       isScrollControlled: true,
       context: context,
       builder: (modalContext) => NewExpense(onAddExpense: _addExpense),
-      );
+    );
   }
 
-  void _addExpense(Expense expense){
+  void _addExpense(Expense expense) {
     setState(() {
       _myExpenses.add(expense);
     });
   }
 
-  void _removeExpense(Expense expense){
+  void _removeExpense(Expense expense) {
     final expenseIndex = _myExpenses.indexOf(expense);
     setState(() {
       _myExpenses.remove(expense);
@@ -45,14 +44,13 @@ class _Expenses extends State<Expenses> {
       content: const Text("Expense Delted!"),
       duration: const Duration(seconds: 4),
       action: SnackBarAction(
-        label: "Undo", 
-        onPressed: () {
-          setState(() {
-            _myExpenses.insert(expenseIndex, expense);
-          });
-        }),
-      )
-    );
+          label: "Undo",
+          onPressed: () {
+            setState(() {
+              _myExpenses.insert(expenseIndex, expense);
+            });
+          }),
+    ));
   }
 
   @override
@@ -60,28 +58,52 @@ class _Expenses extends State<Expenses> {
     Widget mainScreenContent = const Center(
       child: Text('No Expenses here... Add some using the + sign.'),
     );
-    if(_myExpenses.isNotEmpty){
+    if (_myExpenses.isNotEmpty) {
       mainScreenContent = ExpensesList(
         allExpenses: _myExpenses,
         onRemoveExpense: _removeExpense,
       );
     }
     return Scaffold(
+      drawer: Drawer(
+        child: Column(
+          children: [
+            const DrawerHeader(
+              child: Center(
+                child: Text('Expenses Tracker'),
+              ),
+            ),
+            ListTile(
+              leading: Icon(Icons.dark_mode),
+              title: Text('Switch Themes.'),
+              onTap: () {
+                // Handle drawer item tap here.
+              },
+            ),
+          ],
+        ),
+      ),
       appBar: AppBar(
         title: const Text("Expenses Tracker!"),
         actions: [
           IconButton(
-            onPressed: _openAddExpenseItemOverlay, 
-            icon: const Icon(Icons.add)),
+            onPressed: _openAddExpenseItemOverlay,
+            icon: const Icon(Icons.add),
+          ),
         ],
       ),
       body: Column(
-        children: [
-          const Text("Expenses go here!"),
-          const SizedBox(width: 40,),
-          Expanded(child: mainScreenContent,)
-        ],
+  children: [
+    const Text("Expenses go here!"),
+    const SizedBox(width: 40),
+    Expanded( 
+      child: Container(
+        color: Colors.white,
+        child: mainScreenContent,
       ),
+    ),
+  ],
+),
     );
   }
 }
