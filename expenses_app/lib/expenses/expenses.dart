@@ -1,7 +1,9 @@
 import 'package:expenses_app/expenses/expense_list.dart';
 import 'package:expenses_app/expenses/new_expense.dart';
 import 'package:expenses_app/expesnes_models/expense_model.dart';
+import 'package:expenses_app/themes/theme_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Expenses extends StatefulWidget {
   const Expenses({super.key});
@@ -74,10 +76,10 @@ class _Expenses extends State<Expenses> {
               ),
             ),
             ListTile(
-              leading: Icon(Icons.dark_mode),
-              title: Text('Switch Themes.'),
+              leading: const Icon(Icons.dark_mode),
+              title: const Text('Switch Themes.'),
               onTap: () {
-                // Handle drawer item tap here.
+                Provider.of<ThemeProvider>(context, listen: false).toggleThemes();
               },
             ),
           ],
@@ -98,7 +100,7 @@ class _Expenses extends State<Expenses> {
     const SizedBox(width: 40),
     Expanded( 
       child: Container(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.background,
         child: mainScreenContent,
       ),
     ),

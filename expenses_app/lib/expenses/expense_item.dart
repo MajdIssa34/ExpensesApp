@@ -12,6 +12,7 @@ final Expense expense;
 @override
   Widget build(context) {
     return Card(
+      color: Theme.of(context).colorScheme.primary,
       child: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: 30,
@@ -25,6 +26,7 @@ final Expense expense;
                   Text('\$${expense.amount.toStringAsFixed(2)}'),
                   const Spacer(),
                   Row(children: [
+                    
                     Icon(categoryIcons[expense.category]),
                     const SizedBox(width: 10),
                     Text(expense.formattedDate),
