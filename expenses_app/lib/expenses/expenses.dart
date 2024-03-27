@@ -1,6 +1,7 @@
 import 'package:expenses_app/expenses/expense_list.dart';
 import 'package:expenses_app/expenses/new_expense.dart';
 import 'package:expenses_app/expesnes_models/expense_model.dart';
+import 'package:expenses_app/statistics/statistics.dart';
 import 'package:expenses_app/themes/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -28,6 +29,12 @@ class _Expenses extends State<Expenses> {
       context: context,
       builder: (modalContext) => NewExpense(onAddExpense: _addExpense),
     );
+  }
+
+  void _openStatisticsOverlay(){
+    showModalBottomSheet(
+      context: context, 
+      builder: (modalContext) => const StatisticsWidget());
   }
 
   void _addExpense(Expense expense) {
@@ -77,16 +84,25 @@ class _Expenses extends State<Expenses> {
             ),
             ListTile(
               leading: const Icon(Icons.dark_mode),
-              title: const Text('Switch Themes.'),
+              title: const Text('Switch Themes'),
               onTap: () {
                 Provider.of<ThemeProvider>(context, listen: false).toggleThemes();
+              },
+            ),
+            const SizedBox(width: 40,),
+            ListTile(
+              leading: const Icon(Icons.summarize),
+              title: const Text('Statistics'),
+              onTap: (){
+                _openStatisticsOverlay;
               },
             ),
           ],
         ),
       ),
       appBar: AppBar(
-        title: const Text("Expenses Tracker!"),
+        title: const Text("Expenses Tracker"),
+        centerTitle: true,
         actions: [
           IconButton(
             onPressed: _openAddExpenseItemOverlay,
