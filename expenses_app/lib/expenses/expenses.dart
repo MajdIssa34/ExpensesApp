@@ -1,7 +1,7 @@
 import 'package:expenses_app/expenses/expense_list.dart';
 import 'package:expenses_app/expenses/new_expense.dart';
 import 'package:expenses_app/expesnes_models/expense_model.dart';
-import 'package:expenses_app/statistics/statistics.dart';
+import 'package:expenses_app/statistics/expense_chart.dart';
 import 'package:expenses_app/themes/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -29,12 +29,6 @@ class _Expenses extends State<Expenses> {
       context: context,
       builder: (modalContext) => NewExpense(onAddExpense: _addExpense),
     );
-  }
-
-  void _openStatisticsOverlay(){
-    showModalBottomSheet(
-      context: context, 
-      builder: (modalContext) => const StatisticsWidget());
   }
 
   void _addExpense(Expense expense) {
@@ -89,14 +83,6 @@ class _Expenses extends State<Expenses> {
                 Provider.of<ThemeProvider>(context, listen: false).toggleThemes();
               },
             ),
-            const SizedBox(width: 40,),
-            ListTile(
-              leading: const Icon(Icons.summarize),
-              title: const Text('Statistics'),
-              onTap: (){
-                _openStatisticsOverlay;
-              },
-            ),
           ],
         ),
       ),
@@ -114,6 +100,7 @@ class _Expenses extends State<Expenses> {
   children: [
     const Text("Expenses go here!"),
     const SizedBox(width: 40),
+    Chart(expenses: _myExpenses),
     Expanded( 
       child: Container(
         color: Theme.of(context).colorScheme.background,

@@ -1,3 +1,4 @@
+//import 'package:expenses_app/expenses/expenses.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 import 'package:intl/intl.dart';
@@ -33,5 +34,22 @@ class Expense {
   String get formattedDate {
     return formatter.format(date);
   }
-
 }
+
+  class ExpensesContainer{
+    const ExpensesContainer({required this.expenses, required this.category});
+
+    ExpensesContainer.forCategory(List<Expense> allExpenses, this.category):
+      expenses = allExpenses.where((expense) => expense.category == category).toList();
+
+    final Category category;
+    final List<Expense> expenses;
+
+    double get sumOfExpenses{
+      double sum = 0;
+      for(int i = 0 ; i < expenses.length ; i++){
+        sum+=expenses[i].amount;
+      }
+      return sum;
+    }
+  }
